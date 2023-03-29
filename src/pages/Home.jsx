@@ -40,7 +40,7 @@ const Home = () => {
                 </div>
                 <div className='mt-4'>
                     <form>
-                        <input type="text" placeholder='Cari Surah' className='w-full py-2 px-4 bg-slate-100 rounded-full focus:outline focus:outline-slate-500 transition-all ease' onChange={(e) =>setSearch(e.target.value)} />
+                        <input type="text" placeholder='Cari Surah' className='w-full py-2 px-4 bg-slate-100 rounded-full focus:outline focus:outline-slate-500 transition-all ease' onChange={(e) =>setSearch(e.target.value.toLowerCase())} />
                     </form>
                 </div>
                 <div className='mt-8'>
