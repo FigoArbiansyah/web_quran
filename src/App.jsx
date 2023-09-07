@@ -6,6 +6,14 @@ import Surah from './pages/Surah'
 import Ayat from './pages/Ayat'
 
 function App() {
+  React.useEffect(() => {
+    const bookmarksData = localStorage.getItem('bookmarks');
+
+    // Jika tidak ada data bookmarks di localStorage, inisialisasikan dengan []
+    if (!bookmarksData) {
+      localStorage.setItem('bookmarks', JSON.stringify([]));
+    }
+  }, []);
 
   return (
     <BrowserRouter>
