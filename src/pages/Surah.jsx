@@ -16,6 +16,9 @@ const Surah = () => {
   const [filled, setFilled] = useState(false);
   const [renderedAyatCount, setRenderedAyatCount] = useState(25); // Jumlah maksimal ayat yang akan dirender
   const { id } = useParams();
+  const [played, setPlayed] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(Array(ayat.length).fill(false));
+
 
   const getDetailSurah = async () => {
     setLoading(true);
@@ -37,19 +40,37 @@ const Surah = () => {
     }
     
     const playAudio = async (i, n) => {
-        await document.querySelector(".play"+n).classList.toggle("hidden")
-        await document.querySelector(".pause"+n).classList.toggle("hidden")
+        const currentlyPlayingIndex = isPlaying.findIndex((playing) => playing);
+        if (currentlyPlayingIndex !== -1) {
+          pauseAudio(currentlyPlayingIndex, currentlyPlayingIndex, true);
+        }
+        const pauseBtn = document.querySelector(".pause"+n);
+        const playBtn = document.querySelector(".play"+n)
+        await playBtn.classList.toggle("hidden")
+        await pauseBtn.classList.toggle("hidden")
         const audio = document.getElementById(`audio${i}`)
-        await audio.play()
-        console.log("play");
+        audio.play();
+        setIsPlaying((prevIsPlaying) => {
+          const newIsPlaying = [...prevIsPlaying];
+          newIsPlaying[i] = true;
+          return newIsPlaying;
+        });
     }
     
-    const pauseAudio = (i, n) => {
+    const pauseAudio = (i, n, reset) => {
         document.querySelector(".pause"+n).classList.toggle("hidden")
         document.querySelector(".play"+n).classList.toggle("hidden")
         const audio = document.getElementById(`audio${i}`)
-        audio.pause()
-        console.log("play");
+        if (reset) {
+            audio.currentTime = 0
+        }
+        audio.pause();
+        setIsPlaying((prevIsPlaying) => {
+          const newIsPlaying = [...prevIsPlaying];
+          newIsPlaying[i] = false;
+          return newIsPlaying;
+        });
+
     }
 
     const setBookmark = (ayat_id) => {
@@ -78,10 +99,12 @@ const Surah = () => {
     <Main>
         <div id='_surah' className='md:w-5/12 md:mx-auto bg-white min-h-screen'>
             <nav className='py-6 px-7'>
-                <div className='flex justify-between text-gray-500'>
+                <div className='flex gap-2 items-end text-gray-500'>
                     <Link to={"/"}>
                         <i className="fa-solid fa-home"></i>
+                        <i className="fa-solid fa-chevron-right ml-2 scale-75 text-slate-400"></i>
                     </Link>
+                    <Link to={""} className="text-slate-700 text-sm">{detailSurat?.name?.transliteration?.id}</Link>
                     <div>
                         <span id='clock' className='text-sm'></span>
                     </div>
@@ -187,11 +210,11 @@ const Surah = () => {
                                             <span onClick={() => setBookmark(a?.number?.inQuran)} className={`cursor-pointer`}>
                                                 <i className={`text-gray-500 fa-sharp ${isMarked(a?.number?.inQuran)} fa-bookmark`}></i>
                                             </span>
-                                            <span onClick={() => playAudio(i, i)} className={`cursor-pointer play play${i}`}>
-                                                <i className="text-gray-500 fa-sharp fa-solid fa-play"></i>
+                                            <span onClick={() => playAudio(i, i)} className={`cursor-pointer play play${i} ${isPlaying[i] ? 'hidden' : ''}`}>
+                                              <i className="text-gray-500 fa-sharp fa-solid fa-play"></i>
                                             </span>
-                                            <span onClick={() => pauseAudio(i, i)} className={`cursor-pointer hidden pause pause${i}`}>
-                                                <i className="text-gray-500 fa-sharp fa-solid fa-pause"></i>
+                                            <span onClick={() => pauseAudio(i, i)} className={`cursor-pointer pause pause${i} ${isPlaying[i] ? '' : 'hidden'}`}>
+                                              <i className="text-gray-500 fa-sharp fa-solid fa-pause"></i>
                                             </span>
                                             <Link to={`/${detailSurat.number}/${i + 1}`}>
                                                 <span>
@@ -204,7 +227,19 @@ const Surah = () => {
                                         <p className='nama-surah text-2xl mb-5 leading-[4rem]'>{a.text.arab}</p>
                                         <p className='mb-3'>{a.text.transliteration.en}</p>
                                         <p className='text-slate-700 mb-2'>{a.translation.id}</p>
-                                        <audio src={a.audio.primary} id={`audio${i}`} className="absolute opacity-0" controls></audio>
+                                        <audio
+                                          src={a.audio.primary}
+                                          id={`audio${i}`}
+                                          className="absolute opacity-0"
+                                          controls
+                                          onEnded={() => {
+                                            setIsPlaying((prevIsPlaying) => {
+                                              const newIsPlaying = [...prevIsPlaying];
+                                              newIsPlaying[i] = false;
+                                              return newIsPlaying;
+                                            });
+                                          }}
+                                        ></audio>
                                     </div>
                                 </div>
                             )

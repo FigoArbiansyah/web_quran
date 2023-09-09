@@ -52,21 +52,25 @@ const Ayat = () => {
         desc.classList.toggle("hidden")
     }
     
-    const playAudio = async (n) => {
-        await document.querySelector(".play").classList.toggle("hidden")
-        await document.querySelector(".pause").classList.toggle("hidden")
-        const audio = document.getElementById(`audio`)
-        await audio.play()
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    const playAudio = () => {
+        const audio = document.getElementById(`audio`);
+        audio.play();
+        setIsPlaying(true);
         console.log("play");
-    }
-    
-    const pauseAudio = (n) => {
-        document.querySelector(".pause").classList.toggle("hidden")
-        document.querySelector(".play").classList.toggle("hidden")
-        const audio = document.getElementById(`audio`)
-        audio.pause()
-        console.log("play");
-    }
+    };
+
+    const pauseAudio = () => {
+        const audio = document.getElementById(`audio`);
+        audio.pause();
+        setIsPlaying(false);
+        console.log("pause");
+    };
+
+    const handleAudioEnded = () => {
+        setIsPlaying(false);
+    };
 
     useEffect(() => {
         getDetailSurah()
@@ -78,13 +82,12 @@ const Ayat = () => {
         <div className='md:w-5/12 md:mx-auto bg-white min-h-screen'>
             <nav className='py-6 px-7'>
                 <div className='flex justify-between text-gray-500'>
-                    <div className="flex gap-4 items-center">
+                    <div className="flex gap-2 items-end">
                         <Link to={"/"}>
                             <i className="fa-solid fa-home"></i>
+                            <i className="fa-solid fa-chevron-right ml-2 scale-75 text-slate-600"></i>
                         </Link>
-                        <Link to={`/${id}`}>
-                            <i className="text-gray-500 fa-sharp fa-solid fa-book"></i>
-                        </Link>
+                        <Link to={`/${detailSurat?.number}`} className="text-slate-700 text-sm">{detailSurat?.name?.transliteration?.id} : {detailAyat?.number?.inSurah}</Link>
                     </div>
                     <div>
                         <span id='clock' className='text-sm'></span>
@@ -161,11 +164,12 @@ const Ayat = () => {
                             <div className="flex gap-3 items-center justify-between">
                                 <span className='flex justify-center items-center text-slate-500 text-sm w-10 h-10 radius border'>{detailAyat?.number?.inSurah}</span>
                                 <div className='flex gap-4'>
-                                    <span onClick={() => playAudio()} className={`cursor-pointer play`}>
-                                        <i className="text-gray-500 fa-sharp fa-solid fa-play"></i>
-                                    </span>
-                                    <span onClick={() => pauseAudio()} className={`cursor-pointer hidden pause`}>
-                                        <i className="text-gray-500 fa-sharp fa-solid fa-pause"></i>
+                                    <span onClick={() => (isPlaying ? pauseAudio() : playAudio())} className={`cursor-pointer`}>
+                                        {isPlaying ? (
+                                            <i className="text-gray-500 fa-sharp fa-solid fa-pause"></i>
+                                        ) : (
+                                            <i className="text-gray-500 fa-sharp fa-solid fa-play"></i>
+                                        )}
                                     </span>
                                     {/* <a href={`/${detailSurat.number}/${i + 1}`}>
                                         <span>
@@ -182,7 +186,7 @@ const Ayat = () => {
                                     <p className="mt-2">Tafsir: </p>
                                     <p className='text-slate-800 text-justify mb-2'>{detailAyat?.tafsir?.id?.long}</p>
                                 </div>
-                                <audio src={detailAyat?.audio?.primary} id={`audio`} className="absolute opacity-0" controls></audio>
+                                <audio src={detailAyat?.audio?.primary} id={`audio`} className="absolute opacity-0" controls onEnded={handleAudioEnded}></audio>
                             </div>
                         </div>
                     </div>
