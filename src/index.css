@@ -7,6 +7,16 @@ html {
   scroll-behavior: smooth;
 }
 
+#surah {
+  border: 20px solid transparent; /* Atur ketebalan border dan buat border transparan */
+/*  border-image-source: url('https://img.freepik.com/free-vector/floral-antique-pattern-vector-frame-copy-space_53876-173642.jpg?size=626&ext=jpg&ga=GA1.2.1718643967.1680267793&semt=ais');*/
+  border-image-source: url('./assets/pattern.png');
+  border-image-slice: 10; /* Atur berapa banyak border image akan digunakan */
+  border-image-repeat: round; /* Atur pengulangan border image */
+  border-image-width: 20px; /* Atur lebar border image */
+  box-sizing: border-box; /* Jangan biarkan border mempengaruhi ukuran total div */
+}
+
 .main {
   background: #f5f5f5 url(./assets/pattern.png);
   background-attachment: fixed;
