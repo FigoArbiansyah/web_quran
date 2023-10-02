@@ -15,6 +15,7 @@ const Surah = () => {
   const [loading, setLoading] = useState(false);
   const [bookmarks, setBookmarks] = useState([]);
   const [isPlaying, setIsPlaying] = useState(Array(ayat.length).fill(false));
+  const [renderedAyatCount, setRenderedAyatCount] = useState(25);
 
   useEffect(() => {
     // Ambil data bookmark dari localStorage saat komponen pertama kali dimuat
