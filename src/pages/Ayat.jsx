@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Main from '../layout/Main';
 import ShimmerDetailAyah from '../components/ShimmerDetailAyah';
+import Breadcrumbs from '../components/BreadCrumbs';
 
 const Ayat = () => {
   const location = useLocation();
@@ -59,18 +60,17 @@ const Ayat = () => {
     getAyat();
   }, [location.key]);
 
+  const link = {
+    title: `${detailSurat?.name?.transliteration?.id ?? '-'} : ${detailAyat?.number?.inSurah ?? '-'}` ?? '-',
+    path: `/${detailSurat?.number}`,
+  };
+
   return (
     <Main>
       <div className="md:w-5/12 md:mx-auto bg-white min-h-screen">
         <nav className="py-6 px-7">
           <div className="flex justify-between text-gray-500">
-            <div className="flex gap-2 items-end">
-              <Link to="/">
-                <i className="fa-solid fa-home" />
-                <i className="fa-solid fa-chevron-right ml-2 scale-75 text-slate-600" />
-              </Link>
-              <Link to={`/${detailSurat?.number}`} className="text-slate-700 text-sm">{detailSurat?.name?.transliteration?.id} : {detailAyat?.number?.inSurah}</Link>
-            </div>
+            <Breadcrumbs link={link} />
             <div>
               <span id="clock" className="text-sm" />
             </div>

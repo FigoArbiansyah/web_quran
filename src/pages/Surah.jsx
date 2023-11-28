@@ -3,6 +3,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Main from '../layout/Main';
 import ShimmerAyahs from '../components/ShimmerAyahs';
+import BreadCrumbs from '../components/BreadCrumbs';
 
 const Surah = () => {
   const location = useLocation();
@@ -97,16 +98,17 @@ const Surah = () => {
     getDetailSurah();
   }, [location.key]);
 
+  const link = {
+    title: `${detailSurat?.name?.transliteration?.id ?? '-'}`,
+    path: '',
+  };
+
   return (
     <Main>
       <div id="_surah" className="md:w-5/12 md:mx-auto bg-white min-h-screen">
         <nav className="py-6 px-7">
           <div className="flex gap-2 items-end text-gray-500">
-            <Link to="/">
-              <i className="fa-solid fa-home" />
-              <i className="fa-solid fa-chevron-right ml-2 scale-75 text-slate-400" />
-            </Link>
-            <Link to="" className="text-slate-700 text-sm">{detailSurat?.name?.transliteration?.id}</Link>
+            <BreadCrumbs link={link} />
             <div>
               <span id="clock" className="text-sm" />
             </div>
