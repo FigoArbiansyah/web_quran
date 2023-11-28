@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Main from '../layout/Main';
@@ -16,8 +15,9 @@ const Ayat = () => {
   const getDetailSurah = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`https://api.quran.gading.dev/surah/${id}`);
-      setDetailSurat(res.data.data);
+      const request = await fetch(`https://api.quran.gading.dev/surah/${id}`);
+      const response = await request.json();
+      setDetailSurat(response.data);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -28,8 +28,9 @@ const Ayat = () => {
   const getAyat = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`https://api.quran.gading.dev/surah/${id}/${ayat}`);
-      setDetailAyat(res.data.data);
+      const request = await fetch(`https://api.quran.gading.dev/surah/${id}/${ayat}`);
+      const response = await request.json();
+      setDetailAyat(response.data);
       setLoading(false);
     } catch (error) {
       console.log(error.message);
@@ -57,8 +58,13 @@ const Ayat = () => {
 
   useEffect(() => {
     getDetailSurah();
+  }, []);
+
+  useEffect(() => {
     getAyat();
   }, [location.key]);
+
+  console.log(detailSurat, detailAyat);
 
   const link = {
     title: `${detailSurat?.name?.transliteration?.id ?? '-'} : ${detailAyat?.number?.inSurah ?? '-'}` ?? '-',
@@ -87,21 +93,23 @@ const Ayat = () => {
                 </span>
               </p>
               <p className="text-gray-800 font-semibold text-lg mt-2">Ayat ke {ayat}</p>
-              <div className="flex justify-around items-center">
-                <Link
-                  to={`/${id}/${detailAyat?.number?.inSurah - 1 === 0 ? 1 : detailAyat?.number?.inSurah - 1}`}
-                  className={`${detailAyat?.number?.inSurah - 1 < 1 ? 'hidden' : 'inline'}`}
-                >
-                  <i className="fa-solid fa-arrow-left" />
-                </Link>
-                <p className="text-gray-500 text-base mt-2 mb-4">{detailSurat?.arti}</p>
-                <Link
-                  to={`/${id}/${detailAyat?.number?.inSurah + 1 > detailSurat?.numberOfVerses ? detailSurat?.numberOfVerses : detailAyat?.number?.inSurah + 1}`}
-                  className={`${detailAyat?.number?.inSurah + 1 > detailSurat?.numberOfVerses ? 'hidden' : 'inline'}`}
-                >
-                  <i className="fa-solid fa-arrow-right" />
-                </Link>
-              </div>
+              {!loading && id && detailAyat?.number?.inSurah && (
+                <div className="flex justify-around items-center">
+                  <Link
+                    to={`/${id}/${detailAyat?.number?.inSurah - 1 === 0 ? 1 : detailAyat?.number?.inSurah - 1}`}
+                    className={`${detailAyat?.number?.inSurah - 1 < 1 ? 'hidden' : 'inline'}`}
+                  >
+                    <i className="fa-solid fa-arrow-left" />
+                  </Link>
+                  <p className="text-gray-500 text-base mt-2 mb-4">{detailSurat?.arti}</p>
+                  <Link
+                    to={`/${id}/${detailAyat?.number?.inSurah + 1 > detailSurat?.numberOfVerses ? detailSurat?.numberOfVerses : detailAyat?.number?.inSurah + 1}`}
+                    className={`${detailAyat?.number?.inSurah + 1 > detailSurat?.numberOfVerses ? 'hidden' : 'inline'}`}
+                  >
+                    <i className="fa-solid fa-arrow-right" />
+                  </Link>
+                </div>
+              )}
               <hr />
               <p className="text-gray-500 my-3">
                 <span>

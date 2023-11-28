@@ -13,7 +13,7 @@ const Breadcrumbs = ({ link }) => {
         )}
       </Link>
       {link && (
-        <Link to={`/${link?.path}`} className="text-slate-700 text-sm">{link?.title}</Link>
+        <Link to={`${link?.path}`} className="text-slate-700 text-sm">{link?.title}</Link>
       )}
     </div>
   );
