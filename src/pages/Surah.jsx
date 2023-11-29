@@ -100,7 +100,7 @@ const Surah = () => {
 
   const link = {
     title: `${detailSurat?.name?.transliteration?.id ?? '-'}`,
-    path: '',
+    path: `/surah/${detailSurat?.number}`,
   };
 
   return (
@@ -129,13 +129,13 @@ const Surah = () => {
                 <span className="text-justify">{detailSurat?.name?.transliteration?.id}</span>
               </p>
               <div className="flex justify-around items-center">
-                <Link to={`/${detailSurat?.number - 1 === 0 ? 114 : detailSurat?.number - 1}`}>
+                <Link to={`/surah/${detailSurat?.number - 1 === 0 ? 114 : detailSurat?.number - 1}`}>
                   <i className="fa-solid fa-arrow-left" />
                 </Link>
                 <p className="text-gray-500 text-base mt-2 mb-4">
                   {detailSurat?.arti}
                 </p>
-                <Link to={`/${detailSurat?.number + 1 === 115 ? 1 : detailSurat?.number + 1}`}>
+                <Link to={`/surah/${detailSurat?.number + 1 === 115 ? 1 : detailSurat?.number + 1}`}>
                   <i className="fa-solid fa-arrow-right" />
                 </Link>
               </div>
@@ -166,7 +166,7 @@ const Surah = () => {
                       <span onClick={() => pauseAudio(i, i)} className={`cursor-pointer pause pause${i} ${isPlaying[i] ? '' : 'hidden'}`}>
                         <i className="text-gray-500 fa-sharp fa-solid fa-pause" />
                       </span>
-                      <Link to={`/${detailSurat.number}/${i + 1}`}>
+                      <Link to={`/surah/${detailSurat.number}/${i + 1}`}>
                         <span>
                           <i className="text-gray-500 fa-sharp fa-solid fa-book-open" />
                         </span>

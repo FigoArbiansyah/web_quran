@@ -68,7 +68,7 @@ const Ayat = () => {
 
   const link = {
     title: `${detailSurat?.name?.transliteration?.id ?? '-'} : ${detailAyat?.number?.inSurah ?? '-'}` ?? '-',
-    path: `/${detailSurat?.number}`,
+    path: `/surah/${detailSurat?.number}`,
   };
 
   return (
@@ -96,14 +96,14 @@ const Ayat = () => {
               {!loading && id && detailAyat?.number?.inSurah && (
                 <div className="flex justify-around items-center">
                   <Link
-                    to={`/${id}/${detailAyat?.number?.inSurah - 1 === 0 ? 1 : detailAyat?.number?.inSurah - 1}`}
+                    to={`/surah/${id}/${detailAyat?.number?.inSurah - 1 === 0 ? 1 : detailAyat?.number?.inSurah - 1}`}
                     className={`${detailAyat?.number?.inSurah - 1 < 1 ? 'hidden' : 'inline'}`}
                   >
                     <i className="fa-solid fa-arrow-left" />
                   </Link>
                   <p className="text-gray-500 text-base mt-2 mb-4">{detailSurat?.arti}</p>
                   <Link
-                    to={`/${id}/${detailAyat?.number?.inSurah + 1 > detailSurat?.numberOfVerses ? detailSurat?.numberOfVerses : detailAyat?.number?.inSurah + 1}`}
+                    to={`/surah/${id}/${detailAyat?.number?.inSurah + 1 > detailSurat?.numberOfVerses ? detailSurat?.numberOfVerses : detailAyat?.number?.inSurah + 1}`}
                     className={`${detailAyat?.number?.inSurah + 1 > detailSurat?.numberOfVerses ? 'hidden' : 'inline'}`}
                   >
                     <i className="fa-solid fa-arrow-right" />

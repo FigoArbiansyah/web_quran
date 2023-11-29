@@ -60,7 +60,7 @@ const Home = () => {
                   ? _surah
                   : _surah.name.transliteration.id.toLowerCase().includes(search)))
                 .map((_surah) => (
-                  <Link to={`/${_surah.number}`} key={_surah?.number}>
+                  <Link to={`/surah/${_surah.number}`} key={_surah?.number}>
                     <div className="flex items-center justify-between py-4 border-b">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 radius flex justify-center items-center border border-emerald-500">

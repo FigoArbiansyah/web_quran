@@ -20,8 +20,9 @@ function App() {
       <Routes>
         <Route>
           <Route index element={<Home />} />
-          <Route path="/:id" element={<Surah />} />
-          <Route path="/:id/:ayat" element={<Ayat />} />
+          <Route path="/surah" element={<Home />} />
+          <Route path="/surah/:id" element={<Surah />} />
+          <Route path="/surah/:id/:ayat" element={<Ayat />} />
         </Route>
       </Routes>
     </BrowserRouter>
