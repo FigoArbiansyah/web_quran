@@ -32,7 +32,7 @@ const Home = () => {
       <div className="md:w-5/12 md:mx-auto bg-white min-h-screen">
         <nav className="py-6 px-7">
           <div className="flex justify-between text-gray-500">
-            <BreadCrumbs />
+            <BreadCrumbs loading={loading} />
             <div>
               <span id="clock" className="text-sm" />
             </div>
