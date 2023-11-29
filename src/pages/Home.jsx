@@ -55,24 +55,28 @@ const Home = () => {
             </div>
           ) : (
             <div className="mt-8">
-              {surah.filter((_surah) => (search.toLowerCase === '' ? _surah : _surah.name.transliteration.id.toLowerCase().includes(search))).map((_surah) => (
-                <Link to={`/${_surah.number}`} key={_surah?.number}>
-                  <div className="flex items-center justify-between py-4 border-b">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 radius flex justify-center items-center border border-emerald-500">
-                        <span className="text-slate-500 text-sm">{_surah.number}</span>
+              {surah.filter((_surah) => (
+                search.toLowerCase === ''
+                  ? _surah
+                  : _surah.name.transliteration.id.toLowerCase().includes(search)))
+                .map((_surah) => (
+                  <Link to={`/${_surah.number}`} key={_surah?.number}>
+                    <div className="flex items-center justify-between py-4 border-b">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 radius flex justify-center items-center border border-emerald-500">
+                          <span className="text-slate-500 text-sm">{_surah.number}</span>
+                        </div>
+                        <div>
+                          <p className="font-semibold">{_surah.name.transliteration.id}</p>
+                          <p className="text-sm text-slate-500">{_surah.name.translation.id}</p>
+                        </div>
                       </div>
                       <div>
-                        <p className="font-semibold">{_surah.name.transliteration.id}</p>
-                        <p className="text-sm text-slate-500">{_surah.name.translation.id}</p>
+                        <span className="text-2xl nama-surah">{_surah.name.short}</span>
                       </div>
                     </div>
-                    <div>
-                      <span className="text-2xl nama-surah">{_surah.name.short}</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
             </div>
           )}
         </div>
