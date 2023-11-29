@@ -18,10 +18,10 @@ const Ayat = () => {
       const request = await fetch(`https://api.quran.gading.dev/surah/${id}`);
       const response = await request.json();
       setDetailSurat(response.data);
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -57,10 +57,12 @@ const Ayat = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     getDetailSurah();
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     getAyat();
   }, [location.key]);
 
