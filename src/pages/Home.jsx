@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Main from '../layout/Main';
 import BreadCrumbs from '../components/BreadCrumbs';
+import SearchBar from '../components/SearchBar';
 
 const Home = () => {
   const [surah, setSurah] = useState([]);
@@ -43,9 +44,10 @@ const Home = () => {
             <p className="text-3xl font-semibold mt-2">Baca Surah</p>
           </div>
           <div className="mt-4">
-            <form>
-              <input type="text" placeholder="Cari Surah" className="w-full py-2 px-4 bg-slate-100 rounded-full focus:outline focus:outline-slate-500 transition-all ease" onChange={(e) => setSearch(e.target.value.toLowerCase())} />
-            </form>
+            <SearchBar
+              placeholder="Cari Surah"
+              onChangeSearch={(e) => setSearch(e.target.value.toLowerCase())}
+            />
           </div>
           {loading ? (
             <div className="mt-8 grid place-items-center">
@@ -72,7 +74,7 @@ const Home = () => {
                 </Link>
               ))}
             </div>
-          )};
+          )}
         </div>
       </div>
     </Main>
