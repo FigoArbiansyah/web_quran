@@ -2,7 +2,7 @@
 
 Weequran is a Quran application based on a website, created using Vite, React, and Tailwind CSS.
 
-![Thumbnail](https://github.com/FigoArbiansyah/web_quran/master/src/assets/Screenshot%20(60).png?raw=true)
+![Thumbnail](https://github.com/FigoArbiansyah/web_quran/master/src/assets/thumbnail.png?raw=true)
 
 ## Installation
 
