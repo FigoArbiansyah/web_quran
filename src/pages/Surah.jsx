@@ -91,7 +91,7 @@ const Surah = () => {
     }
   };
 
-  const isMarked = (ayat_id) => (bookmarks.includes(ayat_id) ? 'fa-solid text-emerald-500' : 'fa-regular');
+  const isMarked = (ayat_id) => (bookmarks.includes(ayat_id) ? 'fa-solid text-emerald-400' : 'fa-regular text-gray-500');
 
   useEffect(() => {
     // Ambil data surah saat location key berubah (navigasi)
@@ -158,7 +158,7 @@ const Surah = () => {
                     </span>
                     <div className="flex gap-4">
                       <span onClick={() => setBookmark(a?.number?.inQuran)} className="cursor-pointer">
-                        <i className={`text-gray-500 fa-sharp ${isMarked(a?.number?.inQuran)} fa-bookmark`} />
+                        <i className={`fa-sharp ${isMarked(a?.number?.inQuran)} fa-bookmark`} />
                       </span>
                       <span onClick={() => playAudio(i, i)} className={`cursor-pointer play play${i} ${isPlaying[i] ? 'hidden' : ''}`}>
                         <i className="text-gray-500 fa-sharp fa-solid fa-play" />
